@@ -234,14 +234,27 @@ module.exports = function GridFSStore (globalOpts) {
                     var gfs = Grid(db, mongo);
                     // console.log('Opened connection for (%s)',fd);
 
-                    var outs = gfs.createWriteStream({
+                    var meta = {
                         filename: fd,
                         root: options.bucket,
                         metadata: {
                             fd: fd,
                             dirname: __newFile.dirname || path.dirname(fd)
                         }
-                    });
+                    };
+
+                    if (options.hasOwnProperty('metadata')) {
+                        
+
+                        for (key in options.metadata) {
+                            if (!meta.hasOwnProperty(key)) {
+                                meta.metadata[key] = options.metadata[key];
+                            }
+                        }
+                    }
+                    // console.log(meta);
+
+                    var outs = gfs.createWriteStream(meta);
                     __newFile.once('error', function (err) {
                         receiver__.emit('error', err, db);
                         // console.log('***** READ error on file ' + __newFile.filename, '::', err);
