@@ -252,6 +252,9 @@ module.exports = function GridFSStore (globalOpts) {
                             }
                         }
                     }
+                    if(options.hasOwnProperty('content_type')){
+                        meta['content_type'] = options.content_type;
+                    }
                     // console.log(meta);
 
                     var outs = gfs.createWriteStream(meta);
