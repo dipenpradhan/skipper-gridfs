@@ -235,7 +235,7 @@ module.exports = function GridFSStore (globalOpts) {
                     // console.log('Opened connection for (%s)',fd);
 
                     var meta = {
-                        filename: fd,
+                        filename: __newFile.filename,
                         root: options.bucket,
                         metadata: {
                             fd: fd,
